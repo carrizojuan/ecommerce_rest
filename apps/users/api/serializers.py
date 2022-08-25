@@ -8,12 +8,33 @@ class UserSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+    def create(self, validated_data):
+        user = User(**validated_data)
+        user.set_password(validated_data["password"])
+        user.save()
+        return user
+
+
+    def update(self, instance, validated_data):
+        user_update = super().update(instance, validated_data)
+        user_update.set_password(validated_data["password"])
+        user_update.save()
+        return user_update
+
+
+#Este serializer se usaria solo para listar los usuarios asi no interfiere con el funcionamiento cuando se realizar un update o create
+
+class UserListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+ 
     #Sirve para solo mostrar unos campos especificos y de forma personalizada al recibir un request de tipo GET
     # No pongo fields = ('id','name') ya que si recibo un un POST solo se podra rellenar los campos id y name y estaria mal
     def to_representation(self, instance):
         return {
             'id': instance.id,
-            'nombre': instance.name
+            'name': instance.name,
+            'password': instance.password
         }
 
 
