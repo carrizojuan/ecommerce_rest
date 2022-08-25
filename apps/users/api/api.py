@@ -19,7 +19,7 @@ def user_api_view(request):
         users = User.objects.all()
         users_serializer = UserSerializer(users, many=True)
 
-        test_data = {
+        """ test_data = {
             "name": "juancarlos",
             "email":"pepe@pepe.com"
         }
@@ -30,7 +30,7 @@ def user_api_view(request):
             user_validate = test_user.save()
             print(user_validate)
         else:
-            print(test_user.errors)
+            print(test_user.errors) """
 
         return Response(users_serializer.data, status=status.HTTP_200_OK)
     
@@ -53,11 +53,16 @@ def user_detail_view(request, pk=None):
             return Response(user_serializer.data, status=status.HTTP_200_OK)
         
         elif request.method == "PUT":
-            user_serializer = UserSerializer(user, data=request.data)
+
+            user_serializer = TestUserSerializer(user, data=request.data)
             if user_serializer.is_valid():
                 user_serializer.save()
                 return Response(user_serializer.data, status=status.HTTP_200_OK)
             return Response(user_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            """ user_serializer = UserSerializer(user, data=request.data)
+            if user_serializer.is_valid():
+                user_serializer.save() """
+                
         
         elif request.method == 'DELETE':
             user = User.objects.filter(id = pk).first()

@@ -24,8 +24,9 @@ class TestUserSerializer(serializers.Serializer):
         if email == "":
             raise serializers.ValidationError("El email no puede estar vacio")
 
-        if self.context["name"] in email:
-            raise serializers.ValidationError("El nombre no puede estar contenido en el email")
+        """ if self.context["name"] in email:
+            raise serializers.ValidationError("El nombre no puede estar contenido en el email") """
+            
         return email
     
     def validate(self, data):
@@ -36,5 +37,11 @@ class TestUserSerializer(serializers.Serializer):
     
     def create(self, validate_data):
         return User.objects.create(**validate_data)
+    
 
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get("name", instance.name)
+        instance.email = validated_data.get("email", instance.email)
+        instance.save()
+        return instance
     
