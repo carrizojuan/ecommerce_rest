@@ -20,14 +20,15 @@ def user_api_view(request):
         users_serializer = UserSerializer(users, many=True)
 
         test_data = {
-            "name": "juancho",
+            "name": "juancarlos",
             "email":"pepe@pepe.com"
         }
 
         test_user = TestUserSerializer(data = test_data, context=test_data)
 
         if test_user.is_valid():
-            print("Es valido el test user")
+            user_validate = test_user.save()
+            print(user_validate)
         else:
             print(test_user.errors)
 
