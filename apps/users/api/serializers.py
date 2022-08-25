@@ -12,10 +12,26 @@ class TestUserSerializer(serializers.Serializer):
     email = serializers.EmailField()
 
     def validate_name(self, name):
-        pass
+
+        """ custom validation """
+
+        if "juancho" == name:
+            raise serializers.ValidationError("el nombre no puede ser juancho")
+        return name
 
     def validate_email(self, email):
-        pass
 
+        if email == "":
+            raise serializers.ValidationError("El email no puede estar vacio")
+
+        if self.context["name"] in email:
+            raise serializers.ValidationError("El nombre no puede estar contenido en el email")
+        return email
+    
     def validate(self, data):
-        return super().validate(data)
+        
+        """ if data["name"] in data["email"]:
+            raise serializers.ValidationError("El nombre no puede estar contenido en el email") """
+        return data
+
+    
