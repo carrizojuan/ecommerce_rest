@@ -15,8 +15,8 @@ class ProductSerializer(serializers.ModelSerializer):
             "name": instance.name,
             "description": instance.description,
             "image": instance.image if instance.image != "" else "", 
-            "measure_unit": instance.measure_unit.description,
-            "category": instance.category.description
+            "measure_unit": instance.measure_unit.description if instance.measure_unit.description != "" else "",
+            "category": instance.category.description if instance.category.description != "" else ""
         }
     
     
