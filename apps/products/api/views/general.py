@@ -1,16 +1,20 @@
 
 from apps.products.api.serializers.general import MeasureUnitSerializer, CategoryProductSerializer, IndicatorSerializer
 from apps.base.api import GenericListApiView
+from rest_framework import viewsets
 
 """ Api Views para listar, se hereda de GenericListApiView que utiliza generics.ListAPIView"""
 
-class MeasureUnitListApiView(GenericListApiView):
+class MeasureUnitViewSet(viewsets.ModelViewSet):
     serializer_class = MeasureUnitSerializer
+    queryset = serializer_class.Meta.model.objects.all()
 
 
-class CategoryProductListApiView(GenericListApiView):
+class CategoryProductViewSet(viewsets.ModelViewSet):
     serializer_class = CategoryProductSerializer
+    queryset = serializer_class.Meta.model.objects.all()
 
 
-class IndicatorListApiView(GenericListApiView):
+class IndicatorViewSet(viewsets.ModelViewSet):
     serializer_class = IndicatorSerializer
+    queryset = serializer_class.Meta.model.objects.all()

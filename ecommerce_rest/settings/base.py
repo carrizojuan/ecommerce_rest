@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'simple_history',
     'apps.products',
-    'apps.base'
+    'apps.base',
+    'drf_yasg'
 ]
 
 MIDDLEWARE = [
