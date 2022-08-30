@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'simple_history',
     'apps.products',
     'apps.base',
+    'rest_framework.authtoken',
     'drf_yasg'
 ]
 
