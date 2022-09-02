@@ -1,5 +1,4 @@
 from datetime import datetime
-from msilib.schema import Error
 from django.contrib.sessions.models import Session
 from rest_framework import status
 from rest_framework.views import APIView
@@ -8,6 +7,20 @@ from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.authtoken.models import Token
 from apps.users.api.serializers import UserTokenSerializer
 from apps.users.models import User
+
+class UserRefreshToken(APIView):
+    
+    def get(self, request, *args, **kwargs):
+        username = request.GET.get('username')
+        try:
+            user = User.objects.get(username=username)
+            user_token = Token.objects.get(user = user)
+            return Response({"token": user_token.key}, status=status.HTTP_200_OK)
+        except:
+            return Response({"error": "Credenciales invalidas"}, status=status.HTTP_400_BAD_REQUEST)
+
+
+
 
 class Login(ObtainAuthToken):
 
